@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+   
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    
+    <link rel="stylesheet" href="../css/expense.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <div class="sub-container">
+          
+          
+          <div class="user-amount-container">
+            <form onsubmit="addNewExpense(event)">
+            <h2>Enter Expenses</h2>
+            <p class="hide error" id="product-title-error">
+              Values cannot be empty
+            </p>
+            <input
+              type="text"
+              class="product-title"
+              id="product-title"
+              name="description"
+              placeholder="Enter Description of Product"
+            />
+            <input
+              type="number"
+              id="user-amount"
+              placeholder="Enter Cost of Product"
+              name="expenseamount"
+            />
+            <select class="product-title"  name="category" >
+                <option value="fuel">fuel</option>
+                <option value="food">food</option>
+                <option value="electricity">electricity</option>
+                <option value="Movie">Movie</option>
+            </select>
+            <br>
+            <button  class="submit" id="add-expenses">Add</button>
+            </form>
+            <button onclick="razorPay(event)" class="submit" id="rzp-button1">
+              Buy Premium</button>
+              <div id="message"></div>
+              <button onclick="download()" class="submit" id="downloadexpense">Download File</button>
+            <div class="submit" id="leaderboard"></div>
+            
+            
+             
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+          </div>
+          <div id="leaderboard"></div></button>
+        </div>
+       
+        <div class="output-container flex-space">
+            <div class="totalExpenses">
+                <p>Total Expenses For Today</p>
+                <span id="expenditure-value">0</span>
+            </div>
+            
+          
+        </div>
+      </div>
+     
+      <div class="list">
+        <h3>Expenses</h3>
+        <div class="list-container" id="listOfExpenses"></div>
+
+      </div>
+    </div>
+    <table id="table2" border="1">
+            
+      <!-- The Row Number 0 -->
+      <tr>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Age</th>
+          <th></th>
+      </tr>
+      <tr id="table"></tr>
+    </table>
+    <div class="bottom-field">
+      <ul class="pagination">
+        <li class="prev"><a href="#" id="prev">&#139;</a></li>
+          <!-- page number here -->
+        <li class="next"><a href="#" id="next">&#155;</a></li>
+      </ul>
+  </div>
+    <ul id="leaderboard"></ul>
+    <script src='./expense.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </body>
+</html>

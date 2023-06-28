@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+    <section class="container forms">
+        <div class="form login">
+            <div class="form-content">
+                <header>Login</header>
+    <form onsubmit="login(event)">
+        <div class="field input-field"><input type="email" name="email" placeholder="Email" required /></div>
+        <div class="field input-field"><input type="password" name="password" placeholder="Password" required /></div>
+        <div class="form-link">
+            <a href="../Forgotpassword/forgotpassword.html" class="forgot-pass">Forgot password?</a>
+        </div>
+        <div class="field button-field">
+            <button>Login</button>
+        </div>
+    </form>
+    <div class="form-link">
+        <span>Don't have an account? <a href="../Signup/signup.html" class="link signup-link">Signup</a></span>
+    </div>
+</div>
+
+</div>
+    </section>
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./login.js" ></script>
+</body>
+</html>
