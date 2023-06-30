@@ -112,6 +112,9 @@
     box-shadow: 0 0.6em 1.2em rgba(28, 0, 80, 0.06);
     border-radius: 0.6em;
   }
+  .pagination {
+    width: 20%;
+  }
   .sublist-content {
     width: 100%;
     border-left: 0.3em solid #018786;
@@ -157,6 +160,7 @@
     border: none;
     color: #018786;
   }
+  
   @media screen and (max-width: 600px) {
     .wrapper {
       font-size: 14px;

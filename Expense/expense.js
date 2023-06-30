@@ -34,13 +34,14 @@ function parseJwt (token) {
 }
 
 window.addEventListener('DOMContentLoaded', ()=> {
+    deleteChild()
     const page = 1;
     getExpenses(page);
     showLeaderboard();
     const token  = localStorage.getItem('token')
     const decodeToken = parseJwt(token)
     console.log(decodeToken)
-    const ispremiumuser = decodeToken.ispremiumuser
+    const ispremiumuser = decodeToken.ispremiumuser;
     if(ispremiumuser){
         showPremiumuserMessage()
         showLeaderboard()
@@ -49,7 +50,7 @@ window.addEventListener('DOMContentLoaded', ()=> {
     .then(response => {
             response.data.expenses.forEach(expense => {
 
-                addNewExpensetoUI(expense);
+               // addNewExpensetoUI(expense);
                 
             })
     }).catch(err => {
@@ -168,9 +169,17 @@ function download()
 
 function getExpenses(page)
 {
+    const token = localStorage.getItem('token')
     axios.get(`http://localhost:3000/expense/getexpensespage/${page}`, { headers: {"Authorization" : token} })
     .then(({data:{expenses,...pageData}}) => {
-        listExpenses(expenses);
+        //listExpenses(expenses);
+        console.log(expenses);
+        
+        expenses.forEach(expense => {
+
+             addNewExpensetoUI(expense);
+             
+         })
         showPagination(pageData);
     })
     .catch((err) => {
@@ -186,6 +195,7 @@ function showPagination({
     lastPage
 })
 {
+    const pagination = document.getElementById('pagination');
     pagination.innerHTML = '';
     if(hasPreviousPage)
     {
@@ -209,3 +219,14 @@ function showPagination({
     }
 
 }
+function deleteChild() {
+    var e = document.querySelector("ul");
+    
+   
+    var child = e.lastElementChild; 
+    while (child) {
+        e.removeChild(child);
+        child = e.lastElementChild;
+    }
+}
+//<div class="list-container" id="listOfExpenses">

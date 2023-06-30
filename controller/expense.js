@@ -6,7 +6,7 @@ const { v1: uuidv1} = require('uuid');
 const ITEMS_PER_PAGE = 2;
 
 const getexpensespage = (req,res,next) => {
-    const page= req.query.page;
+    const page= req.params.page;
     let totalExpensesCount;
     Expense.count()
     .then((total) => {
@@ -22,9 +22,9 @@ const getexpensespage = (req,res,next) => {
             expenses : expenses,
             currentPage:page,
             hasNextPage:ITEMS_PER_PAGE*page<totalExpensesCount,
-            nextPage:page+1,
+            nextPage:Number(page)+1,
             hasPreviousPage:page>1,
-            previousPage:page-1,
+            previousPage:Number(page)-1,
             lastPage:Math.ceil(totalExpensesCount/ITEMS_PER_PAGE)
         })
     })

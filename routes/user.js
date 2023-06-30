@@ -4,6 +4,8 @@ const userController = require('../controller/user');
 
 const expenseController = require('../controller/expense');
 
+const userauthentication = require('../middleware/auth')
+
 const router = express.Router();
 
 
