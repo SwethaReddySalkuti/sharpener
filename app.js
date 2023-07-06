@@ -1,10 +1,14 @@
 const express = require('express');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 const User = require('./models/users');
+const path = require('path');
 const Expense = require('./models/expenses');
 const Order = require('./models/orders');
 const Forgotpassword = require('./models/forgotpassword');
-
+const helmet = require('helmet');
+const compression = require('compression');
+const morgan = require('morgan');
 
 var cors = require('cors');
 const dotenv = require('dotenv');   // to access environment variables
@@ -23,9 +27,16 @@ const userRoutes = require('./routes/user');
 const expenseRoutes = require('./routes/expense');
 const purchaseRoutes = require('./routes/purchase');
 const resetPasswordRoutes = require('./routes/resetpassword');
-const premiumFeatureRoutes = require('./routes/premiumFeature')
+const premiumFeatureRoutes = require('./routes/premiumFeature');
 
+const accessLogStream = fs.createWriteStream(
+  path.join(__dirname,'access.log'),
+  {flag:'a'}
+)
 
+app.use(helmet());
+//app.use(compression());
+//app.use(morgan('combined'),{ stream : accessLogStream});
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use('/user', userRoutes);
