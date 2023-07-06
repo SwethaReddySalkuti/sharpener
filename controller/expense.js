@@ -2,23 +2,25 @@ const Expense = require('../models/expenses');
 const User = require('../models/users');
 const AWS = require('aws-sdk');
 const { v1: uuidv1} = require('uuid');
-
+const sequelize = require('../util/database');
+ const { QueryTypes } = require('sequelize');
 const ITEMS_PER_PAGE = 2;
 
-const getexpensespage = (req,res,next) => {
+const getexpensespage = async (req,res,next) => {
+    try
+    {
     const page= req.params.page;
-    let totalExpensesCount;
-    Expense.count()
-    .then((total) => {
 
-        totalExpensesCount = total;
-        return Expense.findAll({
-            offset:(page-1)*ITEMS_PER_PAGE,
-            limit:ITEMS_PER_PAGE
-        })
-    })
-    .then((expenses) => {
-        return res.json({
+    const total = await Expense.count({ where : { userId: req.user.id}})
+    const totalExpensesCount = total;
+    const expenses = await Expense.findAll(
+            { 
+                where : { userId: req.user.id},
+                offset:(page-1)*ITEMS_PER_PAGE,
+                limit:2
+            })
+        
+        return res.status(200).json({
             expenses : expenses,
             currentPage:page,
             hasNextPage:ITEMS_PER_PAGE*page<totalExpensesCount,
@@ -27,7 +29,12 @@ const getexpensespage = (req,res,next) => {
             previousPage:Number(page)-1,
             lastPage:Math.ceil(totalExpensesCount/ITEMS_PER_PAGE)
         })
-    })
+    }
+    catch(err)
+    {
+        return res.status(500).json({success : false, error: err})
+        console.log(err);
+    }
 }
 
 const addexpense = (req, res) => {
@@ -52,7 +59,8 @@ const addexpense = (req, res) => {
 
 const getexpenses = (req, res)=> {
     
-    Expense.findAll({ where : { userId: req.user.id}}).then(expenses => {
+    Expense.findAll({ where : { userId: req.user.id}}).then(expenses =>
+    {
         return res.status(200).json({expenses, success: true})
     })
     .catch(err => {
@@ -134,10 +142,62 @@ function uploadToS3(data,filename)
 
 }
 
+const monthly = async (req, res)=> {
+    
+    try
+    {
+        const userID = req.user.id;
+        const data = await sequelize.query(`SELECT MONTH(createdAt) AS date,SUM(expenseamount) AS total FROM expenses WHERE userId = ${userID} GROUP BY MONTH(createdAt) `, { type: QueryTypes.SELECT });     
+        return res.status(200).json({data, success: true});
+      
+    } 
+    catch (err)
+    {
+        return res.status(500).json({ error: err, success: false})
+    }
+}
+const yearly = async (req, res)=> {
+    
+    try
+    {
+        const userID = req.user.id;
+        const data = await sequelize.query(`SELECT YEAR(createdAt) AS date,SUM(expenseamount) AS total FROM expenses WHERE userId = ${userID} GROUP BY YEAR(createdAt) `, { type: QueryTypes.SELECT });     
+        return res.status(200).json({data, success: true});
+      
+    } 
+    catch (err)
+    {
+        return res.status(500).json({ error: err, success: false})
+    }
+}
+
+const daily = async (req, res)=> {
+    
+    try
+    {
+       
+        const todaysdate = await sequelize.query(`SELECT NOW()`, { type: QueryTypes.SELECT })
+        
+        const userID = req.user.id;
+        const data = await sequelize.query(`SELECT createdAt AS date,expenseamount AS total FROM expenses WHERE userId = ${userID} AND createdAt = ${todaysdate} `, { type: QueryTypes.SELECT });     
+        return res.status(200).json({data, success: true});
+      
+    } 
+    catch (err)
+    {
+        return res.status(500).json({ error: err, success: false})
+    }
+}
+
+
 module.exports = {
     deleteexpense,
     getexpenses,
     addexpense,
     downloadexpenses,
-    getexpensespage
+    getexpensespage,
+    monthly,
+    yearly,
+    daily
 }
+

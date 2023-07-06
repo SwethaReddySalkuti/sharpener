@@ -1,3 +1,4 @@
+
 function addNewExpense(e){
     e.preventDefault();
 
@@ -12,7 +13,8 @@ function addNewExpense(e){
     axios.post('http://localhost:3000/expense/addexpense',expenseDetails,  { headers: {"Authorization" : token} })
         .then((response) => {
 
-        addNewExpensetoUI(response.data.expense);
+       // addNewExpensetoUI(response.data.expense);
+       window.location.reload();
 
     }).catch(err => showError(err))
 
@@ -20,7 +22,7 @@ function addNewExpense(e){
 
 function showPremiumuserMessage() {
     document.getElementById('rzp-button1').style.visibility = "hidden"
-    document.getElementById('message').innerHTML = "You are a premium user "
+    document.getElementById('message').innerHTML = " PREMIUM USER "
 }
 
 function parseJwt (token) {
@@ -34,13 +36,13 @@ function parseJwt (token) {
 }
 
 window.addEventListener('DOMContentLoaded', ()=> {
+
     deleteChild()
     const page = 1;
     getExpenses(page);
-    showLeaderboard();
     const token  = localStorage.getItem('token')
     const decodeToken = parseJwt(token)
-    console.log(decodeToken)
+   
     const ispremiumuser = decodeToken.ispremiumuser;
     if(ispremiumuser){
         showPremiumuserMessage()
@@ -58,10 +60,13 @@ window.addEventListener('DOMContentLoaded', ()=> {
     })
 });
 
-function addNewExpensetoUI(expense){
+function addNewExpensetoUI(expenses){
+    
     const parentElement = document.getElementById('listOfExpenses');
-   // table = document.getElementById("table");
-        
+    deleteChild()
+
+    expenses.forEach(expense => {
+
     const expenseElemId = `expense-${expense.id}`;
     parentElement.innerHTML += `
         <li id=${expenseElemId}>
@@ -70,6 +75,9 @@ function addNewExpensetoUI(expense){
                 Delete Expense
             </button>
         </li>`
+    
+})
+    
 
 
 }
@@ -100,7 +108,7 @@ function showLeaderboard(){
         console.log(typeof userLeaderBoardArray)
 
         var leaderboardElem = document.getElementById('leaderboard')
-        leaderboardElem.innerHTML += '<h1> Leader Board </<h1>'
+        //leaderboardElem.innerHTML += '<h1> Leader Board </<h1>'
         userLeaderBoardArray.data.forEach((userDetails) => {
             leaderboardElem.innerHTML += `<li>Name - ${userDetails.name} Total Expense - ${userDetails.totalExpenses || 0} </li>`
         })
@@ -132,10 +140,9 @@ async function razorPay(e)
         
         console.log(res)
          alert('You are a Premium User Now')
-         document.getElementById('rzp-button1').style.visibility = "hidden"
-         document.getElementById('message').innerHTML = "You are a premium user "
          localStorage.setItem('token', res.data.token)
-         showLeaderboard()
+         showPremiumuserMessage()
+      
      },
   };
   const rzp1 = new Razorpay(options);
@@ -169,17 +176,16 @@ function download()
 
 function getExpenses(page)
 {
+    const ul = document.getElementById('listOfExpenses');
+
+// 👇️ Remove all list elements
+    ul.innerHTML = '';
+    deleteChild()
     const token = localStorage.getItem('token')
     axios.get(`http://localhost:3000/expense/getexpensespage/${page}`, { headers: {"Authorization" : token} })
     .then(({data:{expenses,...pageData}}) => {
-        //listExpenses(expenses);
-        console.log(expenses);
-        
-        expenses.forEach(expense => {
-
-             addNewExpensetoUI(expense);
-             
-         })
+        console.log(expenses)
+        addNewExpensetoUI(expenses); 
         showPagination(pageData);
     })
     .catch((err) => {
@@ -230,3 +236,56 @@ function deleteChild() {
     }
 }
 //<div class="list-container" id="listOfExpenses">
+function daily()
+{
+    
+    const token = localStorage.getItem('token')
+    axios.get('http://localhost:3000/expense/daily', { headers: {"Authorization" : token} })
+    .then((response) => {
+       monthaddNewExpense(response.data.data);
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+}
+function monthly()
+{  
+    const token = localStorage.getItem('token')
+    axios.get('http://localhost:3000/expense/monthly', { headers: {"Authorization" : token} })
+    .then((response) => {
+       console.log(response.data.data);
+       monthaddNewExpense(response.data.data);
+
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+
+}
+function yearly()
+{
+    
+    const token = localStorage.getItem('token')
+    axios.get('http://localhost:3000/expense/yearly', { headers: {"Authorization" : token} })
+    .then((response) => {
+        
+        monthaddNewExpense(response.data.data);
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+}
+function monthaddNewExpense(expenses){
+    deleteChild()
+    const parentElement = document.getElementById('categorizedexpenses');
+   
+   expenses.forEach(expense => {
+
+    
+    parentElement.innerHTML += `
+        <li >
+            ${expense.date} - ${expense.total} 
+        </li>`
+    
+})
+}

@@ -72,9 +72,7 @@
     border-radius: 0.3em;
     box-shadow: 0 0.6em 1.2em rgba(28, 0, 80, 0.06);
     width: 700px;
-    position: relative;
-    
-   
+    overflow: hidden;
     
   }
   .button-box {
@@ -146,76 +144,6 @@
     padding: 0.6em 1.2em;
     border-radius: 0.3em;
     cursor: pointer;
- 
- 
-  }
-  .submit1 {
-    font-size: 1em;
-    margin-top: 0.8em;
-    background-color: #018786;
-    border: none;
-    outline: none;
-    color: #ffffff;
-    padding: 0.6em 1.2em;
-    border-radius: 0.3em;
-    cursor: pointer;
- 
- position:absolute;
- margin-left: 330px;
-  }
-  .submit2 {
-    font-size: 1em;
-    margin-top: 0.8em;
-    background-color: #018786;
-    border: none;
-    outline: none;
-    color: #ffffff;
-    padding: 0.6em 1.2em;
-    border-radius: 0.3em;
-    cursor: pointer;
- 
- position:absolute;
- margin-left: 95px;
-  }
-  .submit4 {
-    font-size: 1em;
-    margin-top: 0.8em;
-    background-color: #018786;
-    border: none;
-    outline: none;
-    color: #ffffff;
-    padding: 0.6em 1.2em;
-    border-radius: 0.3em;
-    cursor: pointer;
- 
- position:absolute;
- margin-left: 120px;
-  }
-  .submit3 {
-    font-size: 1em;
-    margin-top: 0.8em;
-    background-color: #018786;
-    border: none;
-    outline: none;
-    color: #ffffff;
-    padding: 0.6em 1.2em;
-    border-radius: 0.3em;
-    cursor: pointer;
- margin-left: 350px;
- position: absolute;
-  }
-  .submit5 {
-    font-size: 1em;
-    margin-top: 0.8em;
-    background-color: #018786;
-    border: none;
-    outline: none;
-    color: #ffffff;
-    padding: 0.6em 1.2em;
-    border-radius: 0.3em;
-    cursor: pointer;
- margin-left: 380px;
- position: absolute;
   }
   .listOfExpenses {
     background-color: #ffffff;
@@ -223,14 +151,11 @@
     box-shadow: 0 0.6em 1.2em rgba(28, 0, 80, 0.06);
     border-radius: 0.6em;
   }
-  .exp {
-    color: #ffffff;
-    background-color: #ffffff;
-  }
   .pagination {
     display: inline-block;
-    margin-left: 580px;
-    padding: 20px;
+    margin: auto;
+    width: 50%;
+    padding: 10px;
     align-items: center;
   }
   .sublist-content {
@@ -244,14 +169,6 @@
   .product {
     font-weight: 500;
     color: #363d55;
-  }
-  .premium {
-    margin-left: 275px;
-    color: #018786;
-    font-weight: bold;
-  }
-  .categorizedexpenses {
-    margin-left: 300px;
   }
   .amount {
     color: #414a67;
@@ -296,17 +213,3 @@
       gap: 1em;
     }
   }
-.dailylistitems{
-  position: absolute;
-  margin-left:50px;
-  }
-  .monthlylistitems{
-    position: absolute;
-    margin-left:450px;
-  
-  }
-.yearlylistitems{
-  position:absolute;
-  margin-left: 100px;
-}
-

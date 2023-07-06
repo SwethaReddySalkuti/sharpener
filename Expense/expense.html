@@ -1,91 +1,106 @@
-
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Expense Tracker</title>
-   
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-    />
-    
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
-      rel="stylesheet"
-    />
-    
-    <link rel="stylesheet" href="../css/expense.css" />
-  </head>
-  <body>
-    <div class="wrapper">
-      <div class="container">
-        <div class="sub-container">
-          
-          
-          <div class="user-amount-container">
-            <form onsubmit="addNewExpense(event)">
-            <h2>Enter Expenses</h2>
-            <p class="hide error" id="product-title-error">
-              Values cannot be empty
-            </p>
-            <input
-              type="text"
-              class="product-title"
-              id="product-title"
-              name="description"
-              placeholder="Enter Description of Product"
-            />
-            <input
-              type="number"
-              id="user-amount"
-              placeholder="Enter Cost of Product"
-              name="expenseamount"
-            />
-            <select class="product-title"  name="category" >
-                <option value="fuel">fuel</option>
-                <option value="food">food</option>
-                <option value="electricity">electricity</option>
-                <option value="Movie">Movie</option>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Expense Tracker</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/expense.css" />
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <div class="sub-container">
+
+
+        <div class="user-amount-container">
+          <form onsubmit="addNewExpense(event)">
+            <h1>Expenses</h1>
+            <br>
+          <div class="premium" id="message"></div>
+          <br>
+            <input type="text" class="product-title" id="product-title" name="description"
+              placeholder="Enter Description of Product" />
+            <input type="number" id="user-amount" placeholder="Enter Cost of Product" name="expenseamount" />
+            <select class="product-title" name="category">
+              <option value="fuel">fuel</option>
+              <option value="food">food</option>
+              <option value="electricity">electricity</option>
+              <option value="Movie">Movie</option>
             </select>
             <br>
-            <button type="submit" class="submit" id="add-expenses">Add</button>
-            </form>
-            <button onclick="razorPay(event)" class="submit" id="rzp-button1">
-              Buy Premium</button>
-              <div id="message"></div>
-              <button onclick="download()" class="submit" id="downloadexpense">Download File</button>
-            <div class="submit" id="leaderboard"></div>
+            <button type="submit" class="submit" id="add-expenses">Add Expense</button>
             
-            
-             
-            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-          </div>
-          <div id="leaderboard"></div></button>
-        </div>
-       
-        <div class="output-container flex-space">
+            <button onclick="download()" class="submit5" id="downloadexpense">Download</button>
+          </form>
+          
+          <div class="output-container flex-space">
             <div class="totalExpenses">
-                <p>Total Expenses For Today</p>
-                <span id="expenditure-value">0</span>
-            </div>
-            
+              <button onclick="razorPay(event)" class="submit" id="rzp-button1">
+                Buy Premium</button>
+                <br>
+              <div id="leaderboard"></div>
+            </div></div>
           
+          <br>
+          
+            <button type="submit" class="submit" onclick="daily()" id="dailyexpenses">Daily Expenses</button>
+            <button type="submit" class="submit2" onclick="monthly()" id="monthlyexpenses">Monthly Expenses</button>
+            <button type="submit" class="submit3" onclick="yearly()" id="yearlyexpenses">Yearly Expenses</button>
+            <br>
+            <br>
+            <br>
+            <ul class="categorizedexpenses" id="categorizedexpenses"></ul>
+        
         </div>
-      </div>
-     
-      <div class="list">
-        <h3>Expenses</h3>
+        <br>
+        
+        <br>
+        
+        <br>
+        
+        <div  id="message"></div>
+
+
+
+
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+      </div class="user-amount-container">
+      
+    </div>
+
+    <div class="output-container flex-space">
+      <div class="totalExpenses">
+        <div class="exp"><h3>Expenses</h3></div>
+        
+        <br>
         <div class="list-container" id="listOfExpenses">
-          
-        </div>
+      </div>
+
+
+    </div>
+
+
+    <div class="list">
+      
+      
 
       </div>
+
     </div>
-    
-    <div id = "pagination" class="page"></div>
-    <ul id="leaderboard"></ul>
-    <script src='./expense.js'></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  </body>
+  </div>
+
+  <div id="pagination" class="pagination"></div>
+  <ul id="leaderboard"></ul>
+  <script src='./expense.js'></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+    integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+
 </html>

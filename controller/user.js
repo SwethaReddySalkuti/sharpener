@@ -30,7 +30,8 @@ function isstringinvalid(string){
 }
 
 const generateAccessToken = (id, name, ispremiumuser) => {
-    return jwt.sign({ userId : id, name: name, ispremiumuser } ,'secretkey');
+    const secret = 'secretkey1'
+    return jwt.sign({ userId : id, name: name, ispremiumuser } ,secret);
 }
 
 const login = async (req, res) => {

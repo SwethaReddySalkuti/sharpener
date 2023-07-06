@@ -1,0 +1,111 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense Tracker</title>
+   
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+    />
+    
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    
+    <link rel="stylesheet" href="../css/expense.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="container">
+        <div class="sub-container">
+          
+          
+          <div class="user-amount-container">
+            <form onsubmit="addNewExpense(event)">
+            <h1>Expenses</h1>
+            <br>
+            <input
+              type="text"
+              class="product-title"
+              id="product-title"
+              name="description"
+              placeholder="Enter Description of Product"
+            />
+            <input
+              type="number"
+              id="user-amount"
+              placeholder="Enter Cost of Product"
+              name="expenseamount"
+            />
+            <select class="product-title"  name="category" >
+                <option value="fuel">fuel</option>
+                <option value="food">food</option>
+                <option value="electricity">electricity</option>
+                <option value="Movie">Movie</option>
+            </select>
+            <br>
+            <button type="submit" class="submit" id="add-expenses">Add Expense</button>
+            <button onclick="download()" class="submit" id="downloadexpense">Download Expenses</button>
+            </form>
+            </div>
+            <br>
+            <div class="submit" id="leaderboard"></div>
+            <br>
+            <div class="user-amount-container">
+              <div class="button-box">
+                <div id="btn"></div>
+                <button type="button" onclick="daily()" class="toggle-btn">Daily</button>
+                
+                <button type="button" onclick="yearly()" class="toggle-btn">Yearly</button>
+              </div>
+              <div>
+                <ul class="separate" id="separate"></ul>
+
+              </div>
+              
+            </div>
+            <button type="submit" onclick="monthly()" class="toggle-btn">Monthly</button>
+            <button type="submit" onclick="yearly()" class="toggle-btn">Yearly</button>
+            <br>
+            <button onclick="razorPay(event)" class="submit" id="rzp-button1">
+              Buy Premium</button>
+              <br>
+              
+              <div id="message"></div>
+            
+            
+            
+             
+            <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+          </div>
+          <div id="leaderboard"></div></button>
+        </div>
+       
+        <div class="output-container flex-space">
+            <div class="totalExpenses">
+                <p>Total Expenses For Today</p>
+                <span id="expenditure-value">0</span>
+            </div>
+            
+          
+        </div>
+      
+     
+      <div class="list">
+        <h3>Expenses</h3>
+        <div class="list-container" id="listOfExpenses">
+          
+        </div>
+
+      </div>
+    </div>
+    
+    <div id = "pagination" class="pagination"></div>
+    <ul id="leaderboard"></ul>
+    <script src='./expense.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  </body>
+</html>
