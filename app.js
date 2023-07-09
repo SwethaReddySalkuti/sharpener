@@ -1,5 +1,6 @@
 const express = require('express');
 const fs = require('fs');
+const http = require('http');
 const bodyParser = require('body-parser');
 const User = require('./models/users');
 const path = require('path');
@@ -34,6 +35,8 @@ const accessLogStream = fs.createWriteStream(
   {flag:'a'}
 )
 
+const privateKey = fs.readFileSync('server.key');
+const certificate = fs.readFileSync('server.cert');
 app.use(helmet());
 //app.use(compression());
 //app.use(morgan('combined'),{ stream : accessLogStream});
@@ -60,6 +63,7 @@ sequelize.sync(
   //{force : true}
   )
   .then(result => {
+    //http.createServer({key: privateKey,cert:certificate},app).listen(3000); //manual https
     app.listen(3000);
   })
   .catch(err => {

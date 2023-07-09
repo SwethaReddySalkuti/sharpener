@@ -176,10 +176,11 @@ const daily = async (req, res)=> {
     try
     {
        
-        const todaysdate = await sequelize.query(`SELECT NOW()`, { type: QueryTypes.SELECT })
-        
+        const result = await sequelize.query(`SELECT DATE(CURRENT_DATE()) AS date`, { type: QueryTypes.SELECT })
+        const todaysdate = result.date;
+        console.log(todaysdate);
         const userID = req.user.id;
-        const data = await sequelize.query(`SELECT createdAt AS date,expenseamount AS total FROM expenses WHERE userId = ${userID} AND createdAt = ${todaysdate} `, { type: QueryTypes.SELECT });     
+        const data = await sequelize.query(`SELECT createdAt AS date,expenseamount AS total FROM expenses WHERE userId = ${userID} AND DATE(createdAt) = ${todaysdate} `, { type: QueryTypes.SELECT });     
         return res.status(200).json({data, success: true});
       
     } 
