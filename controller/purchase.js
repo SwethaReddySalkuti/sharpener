@@ -30,18 +30,7 @@ const purchasepremium =async (req, res) => {
 
  const updateTransactionStatus = async (req, res ) => {
     try {
-        /*const { payment_id, order_id} = req.body;
-        Order.findOne({where : {orderid : order_id}}).then(order => {
-            console.log("compppp");
-            order.update({ paymentid: payment_id, status: 'SUCCESSFUL'}).then(() => {
-                req.user.update({ispremiumuser: true})
-                return res.status(202).json({success: true, message: "Transaction Successful"});
-            }).catch((err)=> {
-                throw new Error(err);
-            })
-        }).catch(err => {
-            throw new Error(err);
-        })*/
+    
         const userId = req.user.id;
         const { payment_id, order_id} = req.body;
         const order = await Order.findOne({where : {orderid : order_id}})

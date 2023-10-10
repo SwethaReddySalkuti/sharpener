@@ -18,7 +18,7 @@ const app = express();
 
 dotenv.config();
 
-app.use(cors());
+app.use(cors());          //required to build web applications that access APIs hosted on a different domain or origin.
 
 app.use(express.json());
 
@@ -37,10 +37,10 @@ const accessLogStream = fs.createWriteStream(
 
 const privateKey = fs.readFileSync('server.key');
 const certificate = fs.readFileSync('server.cert');
-app.use(helmet());
-//app.use(compression());
-//app.use(morgan('combined'),{ stream : accessLogStream});
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(helmet());       //secure your Node. js application by setting several HTTP headers like https
+
+
+app.use(bodyParser.urlencoded({ extended: false }));      // helps in parsing form data
 
 app.use('/user', userRoutes);
 app.use('/expense',expenseRoutes);
@@ -60,7 +60,7 @@ Forgotpassword.belongsTo(User);
 
 
 sequelize.sync(
-  //{force : true}
+ // {force : true}
   )
   .then(result => {
     //http.createServer({key: privateKey,cert:certificate},app).listen(3000); //manual https
@@ -69,3 +69,15 @@ sequelize.sync(
   .catch(err => {
     console.log(err);
   });
+
+
+
+
+
+
+
+
+
+
+
+  //app.use(morgan('combined'),{ stream : accessLogStream});

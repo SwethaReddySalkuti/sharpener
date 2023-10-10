@@ -35,7 +35,7 @@ function parseJwt (token) {
     return JSON.parse(jsonPayload);
 }
 
-window.addEventListener('DOMContentLoaded', ()=> {
+window.addEventListener('DOMContentLoaded', async ()=> {
 
     deleteChild()
     const page = 1;
@@ -48,16 +48,7 @@ window.addEventListener('DOMContentLoaded', ()=> {
         showPremiumuserMessage()
         showLeaderboard()
     }
-    axios.get('http://localhost:3000/expense/getexpenses', { headers: {"Authorization" : token} })
-    .then(response => {
-            response.data.expenses.forEach(expense => {
-
-               // addNewExpensetoUI(expense);
-                
-            })
-    }).catch(err => {
-        showError(err)
-    })
+    
 });
 
 function addNewExpensetoUI(expenses){
@@ -82,16 +73,22 @@ function addNewExpensetoUI(expenses){
 
 }
 
-function deleteExpense(e, expenseid) 
+async function deleteExpense(e, expenseid) 
 {
-    const token = localStorage.getItem('token')
-    axios.delete(`http://localhost:3000/expense/deleteexpense/${expenseid}`,  { headers: {"Authorization" : token} }).then(() => {
+    try
+    {
+        const token = localStorage.getItem('token')
+        const response = await axios.delete(`http://localhost:3000/expense/deleteexpense/${expenseid}`,  { headers: {"Authorization" : token} })
 
-            removeExpensefromUI(expenseid);
-
-    }).catch((err => {
-        showError(err);
-    }))
+        removeExpensefromUI(expenseid);
+        window.location.reload();
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+    
+               
 }
 
 function showError(err){
@@ -104,8 +101,6 @@ function showLeaderboard(){
     inputElement.onclick = async() => {
         const token = localStorage.getItem('token')
         const userLeaderBoardArray = await axios.get('http://localhost:3000/premium/showLeaderBoard', { headers: {"Authorization" : token} })
-        console.log(userLeaderBoardArray)
-        console.log(typeof userLeaderBoardArray)
 
         var leaderboardElem = document.getElementById('leaderboard')
         //leaderboardElem.innerHTML += '<h1> Leader Board </<h1>'
@@ -178,7 +173,6 @@ function getExpenses(page)
 {
     const ul = document.getElementById('listOfExpenses');
 
-// 👇️ Remove all list elements
     ul.innerHTML = '';
     deleteChild()
     const token = localStorage.getItem('token')
@@ -235,45 +229,49 @@ function deleteChild() {
         child = e.lastElementChild;
     }
 }
-//<div class="list-container" id="listOfExpenses">
-function daily()
-{
-    
-    const token = localStorage.getItem('token')
-    axios.get('http://localhost:3000/expense/daily', { headers: {"Authorization" : token} })
-    .then((response) => {
-       monthaddNewExpense(response.data.data);
-    })
-    .catch((err) => {
-        console.log(err);
-    })
-}
-function monthly()
-{  
-    const token = localStorage.getItem('token')
-    axios.get('http://localhost:3000/expense/monthly', { headers: {"Authorization" : token} })
-    .then((response) => {
-       console.log(response.data.data);
-       monthaddNewExpense(response.data.data);
 
-    })
-    .catch((err) => {
-        console.log(err);
-    })
-
-}
-function yearly()
+async function daily()
 {
+    try
+    {
     
-    const token = localStorage.getItem('token')
-    axios.get('http://localhost:3000/expense/yearly', { headers: {"Authorization" : token} })
-    .then((response) => {
+        const token = localStorage.getItem('token')
+        const response = await axios.get('http://localhost:3000/expense/daily', { headers: {"Authorization" : token} })
         
         monthaddNewExpense(response.data.data);
-    })
-    .catch((err) => {
+    }
+    catch(err)
+    {
         console.log(err);
-    })
+    }
+}
+async function monthly()
+{  
+    try
+    {
+        const token = localStorage.getItem('token')
+        const response = await axios.get('http://localhost:3000/expense/monthly', { headers: {"Authorization" : token} })
+        monthaddNewExpense(response.data.data);
+    }
+    catch(err)
+    {
+        console.log(err);
+    }
+}
+async function yearly()
+{
+    try
+    {
+        const token = localStorage.getItem('token')
+        const response = await axios.get('http://localhost:3000/expense/yearly', { headers: {"Authorization" : token} })
+        monthaddNewExpense(response.data.data);
+    }
+
+    catch(err)
+    {
+        console.log(err);
+    }
+    
 }
 function monthaddNewExpense(expenses){
     deleteChild()
